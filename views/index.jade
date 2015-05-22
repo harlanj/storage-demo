@@ -1,0 +1,24 @@
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='description', content='#{title}. For more examples check out our GitHub page at https://github.com/OnModulus.')
+    link(rel='stylesheet', href='/css/style.css')
+    script(type='text/javascript', src='/socket.io/socket.io.js')
+    title #{title}
+  body
+    .header
+      p #{title}
+    .wrapper
+      .content
+        #buttons
+          #button1
+            button#1mb(type='button') Create 1MB File
+          #button2
+            button#20mb(type='button') Create 20MB File
+          #button3
+            button#100mb(type='button') Create 100MB File
+        .twitter
+          ul#directories
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+    script(type='text/javascript', src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.js')
+    script(type='text/javascript', src='/js/script.js')
