@@ -1,5 +1,7 @@
 var proc = require('child_process');
 var util = require('util');
+
+var moment = require('moment');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app     = express();
@@ -9,7 +11,7 @@ process.io  = require('socket.io').listen(server);
 // Configuration
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(require('body-parser').urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 app.locals.title = 'Aaron ls Storage App';
 
@@ -37,7 +39,7 @@ app.get('*', function(req, res) {
 
 app.post('/create', function(req, res) {
   var size = req.body.size * 1024;
-  var command = util.format('cd %s && dd if=/dev/zero of=file.txt count=%s bs=%s', directory, size, size);
+  var command = util.format('cd %s && dd if=/dev/zero of=%s.txt count=%s bs=%s', directory, moment().toISOString(), size, size);
   proc.exec(command, function(err, stdout, stderr) {
     if (err || stderr) console.log(err, stderr);
     return res.send('file created');
