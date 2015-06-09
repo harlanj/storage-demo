@@ -13,10 +13,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(require('body-parser').urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
-app.locals.title = 'Aaron ls Storage App';
+app.locals.title = process.env.HOST || 'Aaron ls Storage App';
 
-var directory = process.env.APP_DIR || process.env.CLOUD_DIR || __dirname;
-var command = util.format('ls -al %s', directory);
+var directory = process.env.APP_DIR || process.env.CLOUD_DIR || __dirname + '/storage';
+var command = util.format('ls -al  %s', directory);
 
 function run() {
   proc.exec(command, function(err, stdout, stderr) {
@@ -39,7 +39,7 @@ app.get('*', function(req, res) {
 
 app.post('/create', function(req, res) {
   var size = req.body.size * 1024;
-  var command = util.format('cd %s && dd if=/dev/zero of=%s.txt count=%s bs=%s', directory, moment().toISOString(), size, size);
+  var command = util.format('cd %s && dd if=/dev/zero of=%s.file count=%s bs=%s', directory, moment().toISOString(), size, size);
   proc.exec(command, function(err, stdout, stderr) {
     if (err || stderr) console.log(err, stderr);
     return res.send('file created');
